@@ -1,9 +1,14 @@
 import React from 'react';
 import Product from './Product';
 // Store state in component use this hook
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { CartContext } from '../CartContext'; // use this with useContext hook
 
 const Products = () => {
+  // We need to specify to useContext which context we want to use
+  // We can also create multiple contexts for diff things and features
+  const { name } = useContext(CartContext);
+
   // Fetch the data from the server and render the products
   // We will use simple fetch API instead of Axios
   // Now, one more thing is we are using functional components 
