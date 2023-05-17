@@ -10,7 +10,8 @@ import Cart from './pages/Cart';
 import Navigation from './components/Navigation';
 import SingleProduct from './pages/SingleProduct';
 import { CartContext } from './CartContext';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { getCart, setCart } from './helper';
 
 // Functional component
 // Name of func in capital and same as file name
@@ -23,14 +24,18 @@ const App = () => {
     // Again we need to do only once after component is mounted so keep DependencyList [].
     // We need to persist the data when we refresh and get the latest cart data.
     useEffect(() => {
-        const cart = windows.localStorage.getItem('cart');
-        setCart(JSON.parse(cart));
+        // const cart = getCart();
+        // setCart(JSON.parse(cart));
+        // When we call the promise then inside 'then' we get the var which we wrapped around promise
+        getCart().then(cart => {
+            setCart(JSON.parse(cart));
+        });
     }, []);
 
     // Watch the state of cart for any changes
     useEffect(() => {
         // We can only store string in local storage
-        windows.localStorage.setItem('cart', JSON.stringify(cart));
+        storeCart(JSON.stringify(cart));
     }, [cart]);
 
     // return the JSX from the function
